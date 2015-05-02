@@ -5,12 +5,12 @@ if (Meteor.isClient) {
 	//this code runs on the client
 	Template.body.helpers({
 		tasks: function () {
-			return Tasks.find({});
+			return Tasks.find({},{sort: {createdAt: -1}});
 		}
 	});
 	
 	Template.body.events({
-		"submit .new-task": function (event) {
+		"submit .new-task": function (event) { 
 			//this function is called when the new task is submitted
 			
 			var text = event.target.text.value;
@@ -30,6 +30,17 @@ if (Meteor.isClient) {
 		
 	});
 	
+	Template.task.events({
+		"click .toggle-checked": function () {
+			//set the checked property opposite to its current value
+		Tasks.update(this._id, {$set: {checked: ! this.checked }});	
+		},
+		"click .delete": function () {
+			Tasks.remove(this._id);	
+		}
+		
+		
+	});
 	
 }
 
