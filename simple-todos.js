@@ -31,8 +31,9 @@ if (Meteor.isClient) {
 			
 			Tasks.insert({
 				text: text,
-				createdAt: new Date() //current time
-				
+				createdAt: new Date(), //current time
+				owner: Meteor.userId(),
+				username: Meteor.user().username
 			});
 			
 			//clear form
@@ -58,6 +59,11 @@ if (Meteor.isClient) {
 		
 	});
 	
+	Accounts.ui.config({
+	passwordSignupFields: "USERNAME_ONLY"
+	
+	});
+	
 }
 
 if (Meteor.isServer) {
@@ -65,3 +71,4 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
 }
+
